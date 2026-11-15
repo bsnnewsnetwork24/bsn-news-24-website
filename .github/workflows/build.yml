@@ -1,10 +1,13 @@
-name: Build BSN News 24 Release APK
+name: Build BSN News 24 APK & AAB
 
 on:
   push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-  build-release-apk:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,27 +20,89 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses >/dev/null 2>&1 || true
+
+      - name: Verify google-services.json
+        run: |
+          if [ ! -f app/google-services.json ]; then
+            echo "ERROR: app/google-services.json not found!"
+            exit 1
+          fi
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "9.3.1"
 
-      - name: Ensure Gradle Wrapper
+      - name: Ensure Gradle Wrapper and permissions
         run: |
           if [ ! -f ./gradlew ]; then
             gradle wrapper --gradle-version 9.3.1
           fi
           chmod +x gradlew
 
-      - name: Build Release APK
+      - name: Prepare Debug Keystore
+        run: |
+          if [ ! -f debug.keystore ]; then
+            if [ -f debug.keystore.base64 ]; then
+              base64 -d debug.keystore.base64 > debug.keystore
+            else
+              keytool -genkeypair -v \
+                -keystore debug.keystore \
+                -alias androiddebugkey \
+                -keyalg RSA -keysize 2048 -validity 10000 \
+                -storepass android -keypass android \
+                -dname "CN=Android Debug,O=Android,C=US"
+            fi
+          fi
+
+      - name: Prepare Release Keystore (no secrets required)
         env:
-          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew assembleRelease
+          SECRET_STORE_PW: ${{ secrets.STORE_PASSWORD }}
+          SECRET_KEY_PW: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          if [ -n "$SECRET_STORE_PW" ] && [ -n "$SECRET_KEY_PW" ] && [ -f my-upload-key.jks ]; then
+            echo "KEYSTORE_PATH=${GITHUB_WORKSPACE}/my-upload-key.jks" >> "$GITHUB_ENV"
+            echo "STORE_PASSWORD=$SECRET_STORE_PW" >> "$GITHUB_ENV"
+            echo "KEY_PASSWORD=$SECRET_KEY_PW" >> "$GITHUB_ENV"
+          else
+            CI_KEYSTORE="${RUNNER_TEMP}/ci-release.jks"
+            keytool -genkeypair -v \
+              -keystore "$CI_KEYSTORE" \
+              -alias upload \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass ci_upload_pass \
+              -keypass ci_upload_pass \
+              -dname "CN=BSN News 24,OU=Android,O=BSN News 24,L=Dhaka,ST=Dhaka,C=BD"
+            echo "KEYSTORE_PATH=$CI_KEYSTORE" >> "$GITHUB_ENV"
+            echo "STORE_PASSWORD=ci_upload_pass" >> "$GITHUB_ENV"
+            echo "KEY_PASSWORD=ci_upload_pass" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build Debug APK, Release APK, and Release AAB
+        run: ./gradlew assembleDebug assembleRelease bundleRelease --stacktrace
+
+      - name: Upload Debug APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BSN-News-24-Debug-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
 
       - name: Upload Release APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: BSN-News-24-APK
+          name: BSN-News-24-Release-APK
           path: app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+
+      - name: Upload Release AAB Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BSN-News-24-Release-AAB
+          path: app/build/outputs/bundle/release/app-release.aab
           if-no-files-found: error
