@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "503322160253",
+    "project_id": "bsn-news-24",
+    "storage_bucket": "bsn-news-24.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503322160253:android:c55874bef48c38bc391514",
+        "android_client_info": {
+          "package_name": "com.bsnnews24.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBASZs_TSQGb9nHubFZwqveMuebGWef8xQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
