@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "NewsLink": {
+      "title": "NewsLink",
+      "description": "A personal journalist news link saved by an authenticated BSN News 24 user.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user who owns this news link."
+        },
+        "headline": {
+          "type": "string",
+          "description": "Headline or title of the news article."
+        },
+        "url": {
+          "type": "string",
+          "description": "Normalized URL of the news article."
+        },
+        "normalizedKey": {
+          "type": "string",
+          "description": "Deterministic deduplication key for offline/cloud synchronization."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the news link was created (submitted via FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the news link was last updated (submitted via FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "userId",
+        "headline",
+        "url",
+        "normalizedKey",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/news_links/{linkId}": {
+      "schema": {
+        "$ref": "#/entities/NewsLink"
+      },
+      "description": "Private per-user personal news links synced with Gmail authentication."
+    }
+  }
+}
