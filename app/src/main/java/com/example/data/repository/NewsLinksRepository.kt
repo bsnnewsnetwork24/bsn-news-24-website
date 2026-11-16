@@ -18,6 +18,9 @@ class NewsLinksRepository(
   private val dao: NewsLinkDao,
   private val firestoreRepo: FirestoreNewsLinkRepository,
 ) {
+  private fun currentUserUidOrNull(): String? =
+    runCatching { Firebase.auth.currentUser?.uid }.getOrNull()
+
   fun observeLocalLinks(): Flow<List<NewsLinkEntity>> = dao.observeActiveLinks()
 
   fun isOnline(): Boolean {
@@ -50,7 +53,7 @@ class NewsLinksRepository(
     }
 
     val existing = existingId?.let { dao.findById(it) }
-    val currentUid = Firebase.auth.currentUser?.uid
+    val currentUid = currentUserUidOrNull()
     val docId = existing?.id ?: key
 
     val entity =
@@ -85,7 +88,7 @@ class NewsLinksRepository(
   }
 
   suspend fun deleteLink(entity: NewsLinkEntity): Result<Unit> {
-    val currentUid = Firebase.auth.currentUser?.uid
+    val currentUid = currentUserUidOrNull()
     if (currentUid != null && entity.isSynced) {
       if (isOnline()) {
         val remoteRes = firestoreRepo.deleteLink(entity.id)

@@ -39,11 +39,11 @@ data class NewsLinksUiState(
 
 class NewsLinksViewModel(
   private val repository: NewsLinksRepository,
-  private val auth: FirebaseAuth = Firebase.auth,
+  private val auth: FirebaseAuth? = runCatching { Firebase.auth }.getOrNull(),
 ) : ViewModel() {
 
   private val _searchQuery = MutableStateFlow("")
-  private val _authUser = MutableStateFlow<FirebaseUser?>(auth.currentUser)
+  private val _authUser = MutableStateFlow<FirebaseUser?>(auth?.currentUser)
   private val _syncState = MutableStateFlow(SyncUiFlags())
 
   private var cloudListenerJob: Job? = null
@@ -95,8 +95,8 @@ class NewsLinksViewModel(
       )
 
   init {
-    auth.addAuthStateListener(authStateListener)
-    auth.currentUser?.let { startCloudSyncAndObserve(it.uid) }
+    auth?.addAuthStateListener(authStateListener)
+    auth?.currentUser?.let { startCloudSyncAndObserve(it.uid) }
   }
 
   fun onSearchQueryChanged(query: String) {
@@ -140,6 +140,16 @@ class NewsLinksViewModel(
   }
 
   fun signInWithGmailForCloudSave(context: Context) {
+    if (!repository.isOnline()) {
+      _syncState.update {
+        it.copy(
+          statusMessage = null,
+          errorMessage =
+            "ইন্টারনেট সংযোগ নেই। তবে আপনি অফলাইনে ফোনের মধ্যেই সকল নিউজ লিংক সংরক্ষণ, দেখা, এডিট ও মুছতে পারবেন।",
+        )
+      }
+      return
+    }
     viewModelScope.launch {
       _syncState.update { it.copy(isAuthBusy = true, statusMessage = null, errorMessage = null) }
       val result = GoogleAuthHelper.signInWithGoogle(context)
@@ -223,7 +233,7 @@ class NewsLinksViewModel(
         } catch (e: CancellationException) {
           throw e
         } catch (e: Exception) {
-          if (auth.currentUser?.uid == uid) {
+          if (auth?.currentUser?.uid == uid) {
             _syncState.update {
               it.copy(
                 errorMessage =
@@ -242,7 +252,7 @@ class NewsLinksViewModel(
 
   override fun onCleared() {
     super.onCleared()
-    auth.removeAuthStateListener(authStateListener)
+    auth?.removeAuthStateListener(authStateListener)
     stopCloudObserver()
   }
 

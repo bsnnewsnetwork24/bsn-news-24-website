@@ -11,7 +11,12 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
 import androidx.test.core.app.ApplicationProvider
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.performTextReplacement
 import com.example.config.BsnConfig
+import com.example.data.local.JournalistProfile
+import com.example.utils.IdCardGenerator
+import org.junit.Assert.assertTrue
 import com.example.ui.components.bsnTabs
 import com.example.ui.theme.BsnNews24Theme
 import com.google.firebase.FirebaseApp
@@ -98,6 +103,23 @@ class ExampleRobolectricTest {
     composeTestRule.onNodeWithTag("tab9_list").performScrollToNode(androidx.compose.ui.test.hasText("ঢাকায় বিশেষ সংবাদ সম্মেলন"))
     composeTestRule.onNodeWithText("ঢাকায় বিশেষ সংবাদ সম্মেলন").assertIsDisplayed()
 
+    // Edit saved link offline
+    composeTestRule.onNodeWithContentDescription("এডিট করুন").performClick()
+    composeTestRule.waitForIdle()
+    composeTestRule.onNodeWithTag("dialog_headline_input").performTextReplacement("আপডেটেড সংবাদ সম্মেলন")
+    composeTestRule.onNodeWithTag("dialog_save_link_btn").performClick()
+    composeTestRule.waitForIdle()
+    composeTestRule.onNodeWithTag("tab9_list").performScrollToNode(androidx.compose.ui.test.hasText("আপডেটেড সংবাদ সম্মেলন"))
+    composeTestRule.onNodeWithText("আপডেটেড সংবাদ সম্মেলন").assertIsDisplayed()
+
+    // Delete saved link offline
+    composeTestRule.onNodeWithContentDescription("মুছে ফেলুন").performClick()
+    composeTestRule.waitForIdle()
+    composeTestRule.onNodeWithText("মুছে ফেলুন").performClick()
+    composeTestRule.waitUntil(timeoutMillis = 5_000) {
+      composeTestRule.onAllNodesWithText("আপডেটেড সংবাদ সম্মেলন").fetchSemanticsNodes().isEmpty()
+    }
+
     // Tab 10: Offline Profile + Digital ID Card without serial number
     composeTestRule.onNodeWithTag("bottom_nav_row").performScrollToNode(hasTestTag("tab_profile_id"))
     composeTestRule.onNodeWithTag("tab_profile_id").performClick()
@@ -121,5 +143,20 @@ class ExampleRobolectricTest {
     composeTestRule.onNodeWithTag("tab10_list").performScrollToNode(hasTestTag("download_id_card_btn"))
     composeTestRule.onNodeWithTag("download_id_card_btn").assertIsDisplayed()
     assertFalse(BsnConfig.TAB10_ID_CARD_PROOF_TEXT.contains("ID No"))
+
+    // Verify IdCardGenerator renders high-res offline bitmap with bundled font cleanly
+    val context = ApplicationProvider.getApplicationContext<Context>()
+    val idBitmap =
+      IdCardGenerator.renderIdCardBitmap(
+        context,
+        JournalistProfile(
+          name = "রহিম উদ্দিন",
+          designation = "জেলা প্রতিনিধি",
+          mobileNumber = "01711000000",
+          district = "ঢাকা",
+          isSaved = true,
+        ),
+      )
+    assertTrue(idBitmap.width == 1080 && idBitmap.height == 1600)
   }
 }

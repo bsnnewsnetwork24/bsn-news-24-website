@@ -13,31 +13,41 @@ import com.google.firebase.firestore.snapshots
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 
 class FirestoreNewsLinkRepository(
-  private val db: FirebaseFirestore,
-  private val auth: FirebaseAuth = Firebase.auth,
+  private val db: FirebaseFirestore?,
+  private val auth: FirebaseAuth? = safeAuth(),
 ) {
   constructor(context: Context) : this(
-    FirebaseFirestore.getInstance(
-      context.applicationContext.getString(R.string.firestore_database_id)
-    ),
-    Firebase.auth,
+    safeFirestore(context),
+    safeAuth(),
   )
 
+  private fun requireFirestore(): FirebaseFirestore {
+    return db
+      ?: throw IllegalStateException("ক্লাউড ডাটাবেজ বর্তমানে উপলব্ধ নয়। আপনার সব তথ্য ফোনেই সংরক্ষিত আছে।")
+  }
+
   private fun requireUserId(): String {
-    return auth.currentUser?.uid
+    return auth?.currentUser?.uid
       ?: throw IllegalStateException("ক্লাউড সংরক্ষণের জন্য অনুগ্রহ করে Gmail দিয়ে সাইন ইন করুন।")
   }
 
   fun observeUserLinks(userId: String): Flow<List<CloudNewsLink>> = flow {
+    val firestore = db
+    if (firestore == null) {
+      emitAll(emptyFlow())
+      return@flow
+    }
     val path = "users/$userId/news_links"
     emitAll(
-      db.collection("users")
+      firestore
+        .collection("users")
         .document(userId)
         .collection("news_links")
         .snapshots()
@@ -54,7 +64,7 @@ class FirestoreNewsLinkRepository(
               .firstOrNull()
           if (firestoreError == null && error is CancellationException) throw error
           val exceptionToLog = firestoreError ?: (error as? Exception)
-          if (exceptionToLog != null && auth.currentUser?.uid == userId) {
+          if (exceptionToLog != null && auth?.currentUser?.uid == userId) {
             handleFirestoreError(exceptionToLog, OperationType.LIST, path)
           }
           throw error
@@ -65,8 +75,9 @@ class FirestoreNewsLinkRepository(
   suspend fun fetchAllLinksOnce(userId: String): Result<List<CloudNewsLink>> {
     val path = "users/$userId/news_links"
     return try {
+      val firestore = requireFirestore()
       val snapshot =
-        db.collection("users").document(userId).collection("news_links").get().await()
+        firestore.collection("users").document(userId).collection("news_links").get().await()
       val items =
         snapshot.toObjects(
           CloudNewsLink::class.java,
@@ -82,8 +93,9 @@ class FirestoreNewsLinkRepository(
   }
 
   suspend fun getLinkById(linkId: String): Result<CloudNewsLink?> {
+    val firestore = db ?: return Result.success(null)
     val uid = requireUserId()
-    val docRef = db.collection("users").document(uid).collection("news_links").document(linkId)
+    val docRef = firestore.collection("users").document(uid).collection("news_links").document(linkId)
     return try {
       val snapshot = docRef.get().await()
       val item =
@@ -108,8 +120,9 @@ class FirestoreNewsLinkRepository(
   ): Result<Unit> {
     val uid = requireUserId()
     val safeId = sanitizeDocId(linkId)
-    val docRef = db.collection("users").document(uid).collection("news_links").document(safeId)
     return try {
+      val firestore = requireFirestore()
+      val docRef = firestore.collection("users").document(uid).collection("news_links").document(safeId)
       val existingSnapshot = docRef.get().await()
       if (existingSnapshot.exists()) {
         val updatePayload =
@@ -136,7 +149,7 @@ class FirestoreNewsLinkRepository(
     } catch (e: CancellationException) {
       throw e
     } catch (e: Exception) {
-      handleFirestoreError(e, OperationType.WRITE, docRef.path)
+      handleFirestoreError(e, OperationType.WRITE, "users/$uid/news_links/$safeId")
       Result.failure(e)
     }
   }
@@ -144,19 +157,36 @@ class FirestoreNewsLinkRepository(
   suspend fun deleteLink(linkId: String): Result<Unit> {
     val uid = requireUserId()
     val safeId = sanitizeDocId(linkId)
-    val docRef = db.collection("users").document(uid).collection("news_links").document(safeId)
     return try {
+      val firestore = requireFirestore()
+      val docRef = firestore.collection("users").document(uid).collection("news_links").document(safeId)
       docRef.delete().await()
       Result.success(Unit)
     } catch (e: CancellationException) {
       throw e
     } catch (e: Exception) {
-      handleFirestoreError(e, OperationType.DELETE, docRef.path)
+      handleFirestoreError(e, OperationType.DELETE, "users/$uid/news_links/$safeId")
       Result.failure(e)
     }
   }
 
   companion object {
+    fun safeFirestore(context: Context): FirebaseFirestore? =
+      try {
+        FirebaseFirestore.getInstance(
+          context.applicationContext.getString(R.string.firestore_database_id)
+        )
+      } catch (_: Throwable) {
+        null
+      }
+
+    fun safeAuth(): FirebaseAuth? =
+      try {
+        Firebase.auth
+      } catch (_: Throwable) {
+        null
+      }
+
     fun sanitizeDocId(raw: String): String {
       val cleaned = raw.replace(Regex("[^a-zA-Z0-9_\\-]"), "_")
       return cleaned.ifBlank { "lnk_default" }.take(128)

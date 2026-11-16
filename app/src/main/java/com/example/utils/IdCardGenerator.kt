@@ -28,6 +28,7 @@ import android.print.PrintManager
 import android.print.pdf.PrintedPdfDocument
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
+import androidx.core.content.res.ResourcesCompat
 import com.example.R
 import com.example.config.BsnConfig
 import com.example.data.local.JournalistProfile
@@ -37,6 +38,10 @@ import java.io.FileOutputStream
 object IdCardGenerator {
 
   fun renderIdCardBitmap(context: Context, profile: JournalistProfile): Bitmap {
+    val baseTypeface =
+      runCatching { ResourcesCompat.getFont(context, R.font.hind_siliguri) }.getOrNull()
+        ?: Typeface.DEFAULT
+    val boldTypeface = Typeface.create(baseTypeface, Typeface.BOLD)
     val width = 1080
     val height = 1600
     val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
@@ -165,7 +170,7 @@ object IdCardGenerator {
       Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
         textSize = 54f
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        typeface = boldTypeface
       }
     canvas.drawText("BSN NEWS 24", 260f, 128f, titlePaint)
 
@@ -173,7 +178,7 @@ object IdCardGenerator {
       Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#FFE082")
         textSize = 27f
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        typeface = boldTypeface
       }
     canvas.drawText("BANGLADESH SANGBADIK NETWORK", 260f, 172f, subTitlePaint)
 
@@ -187,7 +192,7 @@ object IdCardGenerator {
         color = Color.parseColor("#0A0D14")
         textSize = 30f
         textAlign = Paint.Align.CENTER
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        typeface = boldTypeface
       }
     canvas.drawText("PRESS", pressRect.centerX(), pressRect.centerY() + 10f, pressText)
 
@@ -195,7 +200,7 @@ object IdCardGenerator {
       Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
         textSize = 26f
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        typeface = boldTypeface
       }
     canvas.drawText(BsnConfig.TAGLINE, 464f, 224f, taglinePaint)
 
@@ -241,7 +246,7 @@ object IdCardGenerator {
           color = Color.parseColor("#94A3B8")
           textSize = 30f
           textAlign = Paint.Align.CENTER
-          typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+          typeface = boldTypeface
         }
       canvas.drawText("ছবি সংযুক্ত নেই", photoRect.centerX(), photoRect.centerY(), noPhotoPaint)
     }
@@ -260,7 +265,7 @@ object IdCardGenerator {
         color = Color.WHITE
         textSize = 48f
         textAlign = Paint.Align.CENTER
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        typeface = boldTypeface
       }
     canvas.drawText(
       profile.name.ifBlank { "সাংবাদিকের নাম" },
@@ -278,7 +283,7 @@ object IdCardGenerator {
         color = Color.parseColor("#07090D")
         textSize = 32f
         textAlign = Paint.Align.CENTER
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        typeface = boldTypeface
       }
     canvas.drawText(
       profile.designation.ifBlank { "সাংবাদিক / প্রতিনিধি" },
@@ -304,13 +309,13 @@ object IdCardGenerator {
       Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#FFD700")
         textSize = 31f
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        typeface = boldTypeface
       }
     val valuePaint =
       Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
         textSize = 33f
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        typeface = boldTypeface
       }
 
     val rows =
@@ -365,7 +370,7 @@ object IdCardGenerator {
         color = Color.WHITE
         textSize = 34f
         textAlign = Paint.Align.CENTER
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        typeface = boldTypeface
       }
     canvas.drawText(
       BsnConfig.TAB10_ID_CARD_PROOF_TEXT,
@@ -380,7 +385,7 @@ object IdCardGenerator {
         color = Color.parseColor("#CBD5E1")
         textSize = 26f
         textAlign = Paint.Align.CENTER
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        typeface = boldTypeface
       }
     canvas.drawText(
       "BSN News 24 • Bangladesh Sangbadik Network",

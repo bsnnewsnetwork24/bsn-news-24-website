@@ -27,7 +27,7 @@ import kotlinx.coroutines.withContext
 object GoogleAuthHelper {
   private const val TAG = "GoogleAuthHelper"
 
-  fun currentUser(): FirebaseUser? = Firebase.auth.currentUser
+  fun currentUser(): FirebaseUser? = runCatching { Firebase.auth.currentUser }.getOrNull()
 
   suspend fun signInWithGoogle(context: Context): Result<FirebaseUser> {
     val clientId =
@@ -81,7 +81,7 @@ object GoogleAuthHelper {
   }
 
   suspend fun attemptSilentSignIn(context: Context): FirebaseUser? {
-    Firebase.auth.currentUser?.let {
+    runCatching { Firebase.auth.currentUser }.getOrNull()?.let {
       return it
     }
     val clientId =
@@ -122,7 +122,7 @@ object GoogleAuthHelper {
       } catch (e: Exception) {
         Log.w(TAG, "Failed to clear credential state: ${e.message}")
       } finally {
-        Firebase.auth.signOut()
+        runCatching { Firebase.auth.signOut() }
       }
     }
   }
