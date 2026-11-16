@@ -5,25 +5,22 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
-import androidx.test.core.app.ApplicationProvider
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performTextReplacement
+import androidx.test.core.app.ApplicationProvider
 import com.example.config.BsnConfig
 import com.example.data.local.JournalistProfile
-import com.example.utils.IdCardGenerator
-import org.junit.Assert.assertTrue
 import com.example.ui.components.bsnTabs
 import com.example.ui.theme.BsnNews24Theme
-import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseOptions
+import com.example.utils.IdCardGenerator
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Before
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,21 +32,6 @@ import org.robolectric.annotation.Config
 class ExampleRobolectricTest {
 
   @get:Rule val composeTestRule = createComposeRule()
-
-  @Before
-  fun ensureFirebaseInitForTest() {
-    val context = ApplicationProvider.getApplicationContext<Context>()
-    if (FirebaseApp.getApps(context).isEmpty()) {
-      FirebaseApp.initializeApp(
-        context,
-        FirebaseOptions.Builder()
-          .setApplicationId("com.bsnnews24.app")
-          .setProjectId("bsn-news-24")
-          .setApiKey("test-api-key")
-          .build(),
-      )
-    }
-  }
 
   @Test
   fun appNameAndTabCount_matchSpecification() {
@@ -89,7 +71,7 @@ class ExampleRobolectricTest {
     composeTestRule.onNodeWithTag("tab8_list").performScrollToNode(hasTestTag("tab8_whatsapp_group_btn"))
     composeTestRule.onNodeWithTag("tab8_whatsapp_group_btn").assertIsDisplayed()
 
-    // Tab 9: Offline Add Link + Search
+    // Tab 9: Pure Offline Add + Edit + Delete Link
     composeTestRule.onNodeWithTag("bottom_nav_row").performScrollToNode(hasTestTag("tab_my_links"))
     composeTestRule.onNodeWithTag("tab_my_links").performClick()
     composeTestRule.waitForIdle()
@@ -99,8 +81,15 @@ class ExampleRobolectricTest {
     composeTestRule.onNodeWithTag("dialog_headline_input").performTextInput("ঢাকায় বিশেষ সংবাদ সম্মেলন")
     composeTestRule.onNodeWithTag("dialog_link_input").performTextInput("https://bsnnews24.blogspot.com/test")
     composeTestRule.onNodeWithTag("dialog_save_link_btn").performClick()
+    composeTestRule.waitUntil(timeoutMillis = 5_000) {
+      runCatching {
+        composeTestRule
+          .onNodeWithTag("tab9_list")
+          .performScrollToNode(androidx.compose.ui.test.hasText("ঢাকায় বিশেষ সংবাদ সম্মেলন"))
+        true
+      }.getOrDefault(false)
+    }
     composeTestRule.waitForIdle()
-    composeTestRule.onNodeWithTag("tab9_list").performScrollToNode(androidx.compose.ui.test.hasText("ঢাকায় বিশেষ সংবাদ সম্মেলন"))
     composeTestRule.onNodeWithText("ঢাকায় বিশেষ সংবাদ সম্মেলন").assertIsDisplayed()
 
     // Edit saved link offline
@@ -108,8 +97,15 @@ class ExampleRobolectricTest {
     composeTestRule.waitForIdle()
     composeTestRule.onNodeWithTag("dialog_headline_input").performTextReplacement("আপডেটেড সংবাদ সম্মেলন")
     composeTestRule.onNodeWithTag("dialog_save_link_btn").performClick()
+    composeTestRule.waitUntil(timeoutMillis = 5_000) {
+      runCatching {
+        composeTestRule
+          .onNodeWithTag("tab9_list")
+          .performScrollToNode(androidx.compose.ui.test.hasText("আপডেটেড সংবাদ সম্মেলন"))
+        true
+      }.getOrDefault(false)
+    }
     composeTestRule.waitForIdle()
-    composeTestRule.onNodeWithTag("tab9_list").performScrollToNode(androidx.compose.ui.test.hasText("আপডেটেড সংবাদ সম্মেলন"))
     composeTestRule.onNodeWithText("আপডেটেড সংবাদ সম্মেলন").assertIsDisplayed()
 
     // Delete saved link offline
@@ -117,8 +113,15 @@ class ExampleRobolectricTest {
     composeTestRule.waitForIdle()
     composeTestRule.onNodeWithText("মুছে ফেলুন").performClick()
     composeTestRule.waitUntil(timeoutMillis = 5_000) {
-      composeTestRule.onAllNodesWithText("আপডেটেড সংবাদ সম্মেলন").fetchSemanticsNodes().isEmpty()
+      runCatching {
+        composeTestRule
+          .onNodeWithTag("tab9_list")
+          .performScrollToNode(androidx.compose.ui.test.hasText("সংরক্ষিত নিউজ লিংক (0)"))
+        true
+      }.getOrDefault(false)
     }
+    composeTestRule.waitForIdle()
+    composeTestRule.onNodeWithText("সংরক্ষিত নিউজ লিংক (0)").assertIsDisplayed()
 
     // Tab 10: Offline Profile + Digital ID Card without serial number
     composeTestRule.onNodeWithTag("bottom_nav_row").performScrollToNode(hasTestTag("tab_profile_id"))
@@ -144,7 +147,6 @@ class ExampleRobolectricTest {
     composeTestRule.onNodeWithTag("download_id_card_btn").assertIsDisplayed()
     assertFalse(BsnConfig.TAB10_ID_CARD_PROOF_TEXT.contains("ID No"))
 
-    // Verify IdCardGenerator renders high-res offline bitmap with bundled font cleanly
     val context = ApplicationProvider.getApplicationContext<Context>()
     val idBitmap =
       IdCardGenerator.renderIdCardBitmap(

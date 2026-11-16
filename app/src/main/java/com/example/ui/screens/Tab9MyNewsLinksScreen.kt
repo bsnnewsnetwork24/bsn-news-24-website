@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -21,27 +20,21 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.AddLink
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.CloudDone
-import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
@@ -169,176 +162,28 @@ fun Tab9MyNewsLinksScreen(
       )
     }
 
-    // Add Link + Gmail Cloud Save Buttons
+    // Add Link Button (100% Offline In-App Persistence)
     item {
-      Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        Button(
-          onClick = {
-            editingLink = null
-            showAddEditDialog = true
-          },
-          modifier =
-            Modifier.fillMaxWidth()
-              .defaultMinSize(minHeight = 52.dp)
-              .testTag("add_news_link_btn"),
-          shape = RoundedCornerShape(14.dp),
-          colors = ButtonDefaults.buttonColors(containerColor = BsnRed, contentColor = Color.White),
-        ) {
-          Icon(imageVector = Icons.Filled.AddLink, contentDescription = null)
-          Spacer(modifier = Modifier.width(8.dp))
-          Text(
-            text = "নতুন লিংক যুক্ত করুন",
-            fontFamily = HindSiliguriFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 15.5.sp,
-          )
-        }
-
-        // Gmail Cloud Save Card (ONLY Tab 9 requests Gmail authentication)
-        Card(
-          modifier = Modifier.fillMaxWidth(),
-          shape = RoundedCornerShape(16.dp),
-          colors = CardDefaults.cardColors(containerColor = BsnSurfaceElevated),
-          border =
-            BorderStroke(
-              1.5.dp,
-              if (state.isSignedIn) BsnGreen else BsnGold,
-            ),
-        ) {
-          Column(
-            modifier = Modifier.fillMaxWidth().padding(14.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-          ) {
-            if (!state.isSignedIn) {
-              Button(
-                onClick = { viewModel.signInWithGmailForCloudSave(context) },
-                enabled = !state.isAuthBusy,
-                modifier =
-                  Modifier.fillMaxWidth()
-                    .defaultMinSize(minHeight = 52.dp)
-                    .testTag("gmail_cloud_save_btn"),
-                shape = RoundedCornerShape(14.dp),
-                colors =
-                  ButtonDefaults.buttonColors(
-                    containerColor = BsnGreen,
-                    contentColor = BsnBlack,
-                  ),
-              ) {
-                if (state.isAuthBusy) {
-                  CircularProgressIndicator(
-                    modifier = Modifier.size(20.dp),
-                    color = BsnBlack,
-                    strokeWidth = 2.dp,
-                  )
-                  Spacer(modifier = Modifier.width(8.dp))
-                  Text(
-                    text = "Gmail যুক্ত হচ্ছে...",
-                    fontFamily = HindSiliguriFontFamily,
-                    fontWeight = FontWeight.Bold,
-                  )
-                } else {
-                  Icon(imageVector = Icons.Filled.CloudUpload, contentDescription = null)
-                  Spacer(modifier = Modifier.width(8.dp))
-                  Text(
-                    text = "Gmail দিয়ে সংরক্ষণ করুন",
-                    fontFamily = HindSiliguriFontFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.5.sp,
-                  )
-                }
-              }
-            } else {
-              Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-              ) {
-                Icon(
-                  imageVector = Icons.Filled.CloudDone,
-                  contentDescription = "Cloud Connected",
-                  tint = BsnGreen,
-                  modifier = Modifier.size(24.dp),
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Column(modifier = Modifier.weight(1f)) {
-                  Text(
-                    text = "Gmail ক্লাউড সক্রিয়",
-                    color = BsnGreen,
-                    fontFamily = HindSiliguriFontFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
-                  )
-                  Text(
-                    text = state.userEmail ?: "সংযুক্ত অ্যাকাউন্ট",
-                    color = BsnTextSecondary,
-                    fontSize = 12.5.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                  )
-                }
-              }
-
-              Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-              ) {
-                Button(
-                  onClick = { viewModel.syncNow() },
-                  enabled = !state.isSyncing,
-                  modifier = Modifier.weight(1f).defaultMinSize(minHeight = 48.dp),
-                  shape = RoundedCornerShape(12.dp),
-                  colors =
-                    ButtonDefaults.buttonColors(
-                      containerColor = BsnGreen,
-                      contentColor = BsnBlack,
-                    ),
-                ) {
-                  if (state.isSyncing) {
-                    CircularProgressIndicator(
-                      modifier = Modifier.size(16.dp),
-                      color = BsnBlack,
-                      strokeWidth = 2.dp,
-                    )
-                  } else {
-                    Icon(
-                      imageVector = Icons.Filled.Sync,
-                      contentDescription = null,
-                      modifier = Modifier.size(18.dp),
-                    )
-                  }
-                  Spacer(modifier = Modifier.width(6.dp))
-                  Text(
-                    text = if (state.isSyncing) "সিঙ্ক হচ্ছে..." else "এখনই সিঙ্ক করুন",
-                    fontFamily = HindSiliguriFontFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 13.sp,
-                  )
-                }
-
-                OutlinedButton(
-                  onClick = { viewModel.signOut(context) },
-                  modifier = Modifier.defaultMinSize(minHeight = 48.dp),
-                  shape = RoundedCornerShape(12.dp),
-                  border = BorderStroke(1.dp, BsnOutline),
-                ) {
-                  Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Logout,
-                    contentDescription = "সাইন আউট",
-                    tint = BsnTextSecondary,
-                    modifier = Modifier.size(17.dp),
-                  )
-                  Spacer(modifier = Modifier.width(5.dp))
-                  Text(
-                    text = "সাইন আউট",
-                    color = BsnTextSecondary,
-                    fontFamily = HindSiliguriFontFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 12.5.sp,
-                  )
-                }
-              }
-            }
-          }
-        }
+      Button(
+        onClick = {
+          editingLink = null
+          showAddEditDialog = true
+        },
+        modifier =
+          Modifier.fillMaxWidth()
+            .defaultMinSize(minHeight = 52.dp)
+            .testTag("add_news_link_btn"),
+        shape = RoundedCornerShape(14.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = BsnRed, contentColor = Color.White),
+      ) {
+        Icon(imageVector = Icons.Filled.AddLink, contentDescription = null)
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+          text = "নতুন লিংক যুক্ত করুন",
+          fontFamily = HindSiliguriFontFamily,
+          fontWeight = FontWeight.Bold,
+          fontSize = 15.5.sp,
+        )
       }
     }
 
@@ -388,8 +233,8 @@ fun Tab9MyNewsLinksScreen(
           fontSize = 15.sp,
         )
         Text(
-          text = if (state.isSignedIn) "লোকাল + ক্লাউড" else "লোকাল স্টোরেজ",
-          color = BsnTextMuted,
+          text = "অফলাইন স্টোরেজ",
+          color = BsnGreen,
           fontFamily = HindSiliguriFontFamily,
           fontWeight = FontWeight.SemiBold,
           fontSize = 12.sp,
@@ -448,12 +293,14 @@ fun Tab9MyNewsLinksScreen(
       }
     }
 
-    // Exact Important Cloud Information Board
+    // Offline In-App Persistence Info Board
     item {
       Spacer(modifier = Modifier.height(4.dp))
       BsnInfoBoard(
-        badgeTitle = "গুরুত্বপূর্ণ তথ্য • চিরস্থায়ী লিংক সংরক্ষণ",
-        bodyText = BsnConfig.TAB9_CLOUD_INFO_TEXT,
+        badgeTitle = "গুরুত্বপূর্ণ তথ্য • অফলাইন লিংক সংরক্ষণ",
+        bodyText =
+          "আপনার সংরক্ষিত সব নিউজ লিংক সম্পূর্ণ অফলাইনে এই অ্যাপের ভেতরেই জমা থাকবে।\n" +
+            "অ্যাপটি যতক্ষণ আপনার মোবাইলে ইনস্টল থাকবে, ইন্টারনেট বা লগইন ছাড়াই যেকোনো সময় লিংকগুলো দেখতে, এডিট করতে ও ওপেন করতে পারবেন।",
         accentColor = BsnGold,
       )
     }
@@ -532,11 +379,7 @@ private fun SavedNewsLinkCard(
         .testTag("saved_link_card_${item.id}"),
     shape = RoundedCornerShape(16.dp),
     colors = CardDefaults.cardColors(containerColor = BsnSurfaceCard),
-    border =
-      BorderStroke(
-        1.dp,
-        if (item.isSynced) BsnGreen.copy(alpha = 0.55f) else BsnOutline,
-      ),
+    border = BorderStroke(1.dp, BsnOutline),
   ) {
     Column(modifier = Modifier.fillMaxWidth().padding(14.dp)) {
       Row(
@@ -581,26 +424,20 @@ private fun SavedNewsLinkCard(
           verticalAlignment = Alignment.CenterVertically,
           modifier =
             Modifier.clip(RoundedCornerShape(50))
-              .background(if (item.isSynced) Color(0xFF0E291B) else Color(0xFF1A2233))
-              .border(
-                1.dp,
-                if (item.isSynced) BsnGreen.copy(alpha = 0.6f) else BsnOutline,
-                RoundedCornerShape(50),
-              )
+              .background(Color(0xFF0E291B))
+              .border(1.dp, BsnGreen.copy(alpha = 0.6f), RoundedCornerShape(50))
               .padding(horizontal = 9.dp, vertical = 4.dp),
         ) {
           Icon(
-            imageVector = if (item.isSynced) Icons.Filled.CloudDone else Icons.Filled.PhoneAndroid,
+            imageVector = Icons.Filled.PhoneAndroid,
             contentDescription = null,
-            tint = if (item.isSynced) BsnGreen else BsnGold,
+            tint = BsnGreen,
             modifier = Modifier.size(13.dp),
           )
           Spacer(modifier = Modifier.width(5.dp))
           Text(
-            text =
-              if (item.isSynced) "ক্লাউডে সংরক্ষিত"
-              else "ফোনে সংরক্ষিত",
-            color = if (item.isSynced) BsnGreen else BsnTextSecondary,
+            text = "অ্যাপে সংরক্ষিত",
+            color = BsnGreen,
             fontFamily = HindSiliguriFontFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 10.5.sp,
