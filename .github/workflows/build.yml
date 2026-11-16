@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -24,26 +25,26 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Accept Android SDK licenses
-        run: yes | sdkmanager --licenses >/dev/null 2>&1 || true
+        run: |
+          SDK_DIR="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
+          mkdir -p "$SDK_DIR/licenses"
+          printf "\n8933bad161af4178b1185d1a37fbf41ea5269c55\nd56f5187479451eabf01fb78af6dfcb131a6481e\n24333f8a63b6825ea9c5514f83c2829b004d1fee\n" > "$SDK_DIR/licenses/android-sdk-license"
+          yes | sdkmanager --licenses >/dev/null 2>&1 || true
 
       - name: Verify google-services.json
         run: |
+          if [ ! -f app/google-services.json ] && [ -f google-services.json ]; then
+            cp google-services.json app/google-services.json
+          fi
           if [ ! -f app/google-services.json ]; then
             echo "ERROR: app/google-services.json not found!"
             exit 1
           fi
 
-      - name: Set up Gradle
+      - name: Set up Gradle 9.3.1
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "9.3.1"
-
-      - name: Ensure Gradle Wrapper and permissions
-        run: |
-          if [ ! -f ./gradlew ]; then
-            gradle wrapper --gradle-version 9.3.1
-          fi
-          chmod +x gradlew
 
       - name: Prepare Debug Keystore
         run: |
@@ -59,6 +60,16 @@ jobs:
                 -dname "CN=Android Debug,O=Android,C=US"
             fi
           fi
+
+      - name: Build Debug APK
+        run: gradle assembleDebug --no-configuration-cache --stacktrace
+
+      - name: Upload Debug APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BSN-News-24-Debug-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
 
       - name: Prepare Release Keystore (no secrets required)
         env:
@@ -83,15 +94,8 @@ jobs:
             echo "KEY_PASSWORD=ci_upload_pass" >> "$GITHUB_ENV"
           fi
 
-      - name: Build Debug APK, Release APK, and Release AAB
-        run: ./gradlew assembleDebug assembleRelease bundleRelease --stacktrace
-
-      - name: Upload Debug APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: BSN-News-24-Debug-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
+      - name: Build Release APK and Release AAB
+        run: gradle assembleRelease bundleRelease --no-configuration-cache --stacktrace
 
       - name: Upload Release APK Artifact
         uses: actions/upload-artifact@v4
