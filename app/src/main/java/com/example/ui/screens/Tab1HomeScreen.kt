@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.R
+import com.example.academy.ui.BsnAcademyBookCard
 import com.example.config.BsnConfig
 import com.example.ui.components.BsnChannelBannerCard
 import com.example.ui.components.BsnInfoBoard
@@ -50,13 +51,17 @@ import com.example.ui.theme.BsnRed
 import com.example.ui.theme.BsnSurfaceCard
 import com.example.ui.theme.BsnTextPrimary
 import com.example.ui.theme.BsnTextSecondary
-import com.example.ui.theme.FacebookBlue
 import com.example.ui.theme.HindSiliguriFontFamily
 import com.example.ui.theme.WhatsAppGreen
 import com.example.utils.ExternalLinkLauncher
 
 @Composable
-fun Tab1HomeScreen(modifier: Modifier = Modifier) {
+fun Tab1HomeScreen(
+  modifier: Modifier = Modifier,
+  completedAcademyChapters: Int = 0,
+  totalAcademyChapters: Int = 0,
+  onOpenAcademy: () -> Unit = {},
+) {
   val context = LocalContext.current
 
   LazyColumn(
@@ -182,21 +187,12 @@ fun Tab1HomeScreen(modifier: Modifier = Modifier) {
       )
     }
 
-    // Facebook Personal Profile Switch Button
+    // Clickable BSN Journalism Academy Book Cover (uses exact uploaded cover in empty Home slot)
     item {
-      BsnSwitchButton(
-        title = "রিমন শিকদার - ব্যক্তিগত ফেসবুক প্রোফাইল",
-        subtitle = "অফিশিয়াল Facebook প্রোফাইল ভিজিট করুন",
-        brand = SocialBrand.FACEBOOK,
-        accentColor = FacebookBlue,
-        testTag = "home_fb_profile_btn",
-        onClick = {
-          ExternalLinkLauncher.openUrl(
-            context,
-            BsnConfig.FACEBOOK_PERSONAL_PROFILE_URL,
-            ExternalLinkLauncher.TargetPlatform.FACEBOOK,
-          )
-        },
+      BsnAcademyBookCard(
+        completedCount = completedAcademyChapters,
+        totalChapters = totalAcademyChapters,
+        onOpenAcademy = onOpenAcademy,
       )
     }
 

@@ -1,0 +1,1086 @@
+BSN NEWS 24
+
+FINAL MASTER PROMPT
+
+22 PARTS — COMPLETE PROJECT IMPLEMENTATION
+
+PROJECT IDENTITY AND PRIMARY OBJECTIVE
+
+You are working on my existing Android application project named BSN News 24.
+
+This is an existing, functioning project. Your responsibility is to carefully inspect, improve, and extend the existing project according to the instructions below.
+
+Do not create a completely new application. Do not replace the existing project with a new template.
+
+The currently open Google AI Studio project, its connected GitHub source, and the version that produced the APK currently running on my phone are the authoritative project.
+
+Known project information:
+
+- App Name: BSN News 24
+- Android Package: "com.bsnnews24.app"
+- Firebase Project: "bsn-news-24"
+- Reference ZIP: "BSN-News-24-APK.zip"
+
+The reference ZIP contains an APK, not the complete editable source code. Therefore, use the currently open Google AI Studio project and its connected source repository as the primary editable project.
+
+The main objective is to add a complete, high-quality, four-year international-standard Mass Communication and Journalism educational academy inside the existing app while preserving its existing design and functionality.
+
+---
+
+PART 1 — IDENTIFY AND INSPECT THE CORRECT PROJECT
+
+Before making any changes:
+
+1. Inspect the currently open Google AI Studio project.
+2. Identify its actual source-code structure, Android framework, modules, dependencies, navigation, and existing features.
+3. Verify that this is the BSN News 24 project.
+4. Inspect the current Home Page and the existing third page.
+5. Identify the exact Facebook profile section, its original URL, text, button, icons, and styling.
+6. Identify the exact WhatsApp section and its position on the third page.
+7. Identify the current GitHub connection and existing Firebase integration.
+8. Inspect the uploaded educational book-cover image.
+
+Do not assume file names or code structures. Inspect the actual project before editing.
+
+Do not make changes until you understand the existing implementation.
+
+---
+
+PART 2 — PRESERVE THE EXISTING APPLICATION DESIGN
+
+This instruction is mandatory.
+
+Preserve the existing:
+
+- Application identity and branding.
+- Package Name and Application ID.
+- Firebase project and configuration.
+- Existing architecture and source-code structure.
+- Colors and color combinations.
+- Fonts and typography.
+- Buttons and button styles.
+- Icons and visual elements.
+- Page layouts and navigation.
+- Existing features and functionalities.
+- Existing links and URLs.
+- Existing animations and interactions.
+- Existing user experience.
+
+Do not redesign the application.
+
+Do not remove or modify any feature unless explicitly instructed in this prompt.
+
+The new Academy must visually integrate with the existing application.
+
+---
+
+PART 3 — REMOVE THE FACEBOOK SECTION FROM THE HOME PAGE
+
+On the Home Page, find the section titled:
+
+"রিমন সিকদার ব্যক্তিগত ফেসবুক প্রোফাইল"
+
+Remove this section from the Home Page.
+
+Remove only this particular section.
+
+Do not accidentally remove other Facebook-related features or unrelated Home Page content.
+
+Preserve the original Facebook profile information for relocation in Part 4.
+
+---
+
+PART 4 — REMOVE WHATSAPP AND RELOCATE THE FACEBOOK SECTION
+
+On the existing third page:
+
+1. Find the WhatsApp number and the section titled:
+   "WhatsApp এ নিউজ পাঠান"
+2. Remove that WhatsApp section.
+3. Take the original Facebook profile section removed from the Home Page.
+4. Place it in the exact location previously occupied by the WhatsApp section on the third page.
+
+Preserve the original Facebook profile section's:
+
+- Actual Facebook profile URL.
+- Original text.
+- Button.
+- Icon.
+- Styling.
+- Functionality.
+- Relevant visual presentation.
+
+Do not invent a new Facebook URL.
+
+Do not change the Facebook destination.
+
+The relocated Facebook section should work exactly as the original section worked.
+
+Test the Home Page and third page after this modification.
+
+---
+
+PART 5 — ADD THE BSN JOURNALISM ACADEMY BOOK TO THE HOME PAGE
+
+Use the empty space created on the Home Page to introduce a new educational book.
+
+Use the separately uploaded cover image exactly as provided.
+
+IMPORTANT COVER IMAGE REQUIREMENTS:
+
+- Do not redraw the image.
+- Do not replace it with an AI-generated image.
+- Do not distort its proportions.
+- Do not crop important parts.
+- Do not change its original text or design.
+- Preserve the complete original image.
+- Display it using a suitable contain/fit presentation.
+- Maintain its natural aspect ratio.
+
+Book title:
+
+BSN JOURNALISM ACADEMY
+
+Mass Communication & Journalism / গণযোগাযোগ ও সাংবাদিকতা
+
+Subtitle:
+
+Four-Year Professional Journalism Education Programme
+
+চার বছর মেয়াদি পূর্ণাঙ্গ সাংবাদিকতা শিক্ষা কার্যক্রম।
+
+The book-cover section must be clickable.
+
+When a user clicks the cover, it should open the BSN Journalism Academy learning interface inside the application.
+
+The Academy must be a real functional educational section, not just a decorative page.
+
+---
+
+PART 6 — INTERNATIONAL ACADEMIC RESEARCH
+
+Develop the BSN Journalism Academy using research from reputable journalism and mass communication education institutions around the world.
+
+Do not limit the curriculum to one university or one country.
+
+Research relevant academic programmes, course structures, educational resources, and professional journalism standards from:
+
+- Bangladesh
+- India
+- United States
+- United Kingdom
+- Canada
+- Australia
+- Europe
+- Asia
+- Other relevant regions
+
+Consider reputable institutions and resources, including:
+
+- Columbia University
+- University of Missouri
+- Cardiff University
+- University of Queensland
+- University of Dhaka
+- Other established universities and journalism schools
+- UNESCO journalism education resources
+- International journalism and media professional organizations
+
+Research should help develop a comprehensive, internationally informed journalism education programme.
+
+IMPORTANT ACADEMIC HONESTY:
+
+BSN Journalism Academy is an independent educational programme.
+
+Do not falsely claim that it is officially approved, accredited, certified, or identical to any university's degree programme.
+
+Clearly distinguish:
+
+1. Verified university syllabus information.
+2. Academic research and references.
+3. Original BSN educational lessons.
+4. BSN model questions.
+5. BSN practical assignments.
+6. Recommended external reading materials.
+
+Do not fabricate university references, academic sources, citations, or research findings.
+
+Respect copyright. Do not copy entire copyrighted books or unauthorized course materials.
+
+---
+
+PART 7 — CREATE THE COMPLETE FOUR-YEAR CURRICULUM
+
+Develop a progressive four-year Mass Communication and Journalism curriculum divided into:
+
+- Four academic years.
+- Two semesters per year.
+- Eight semesters in total.
+
+The curriculum should take a beginner from foundational knowledge to professional-level journalism competencies.
+
+Use the following framework and improve it through research.
+
+YEAR 1 — JOURNALISM FOUNDATION
+
+Include subjects such as:
+
+- Introduction to Mass Communication
+- Introduction to Journalism
+- History of Journalism and Media
+- Communication Theories
+- News and News Values
+- Types of Journalism
+- Print Journalism
+- Basic News Gathering
+- Basic News Writing
+- Bangla for Journalists
+- English for Journalists
+- Media Literacy
+- Media and Society
+- Newsroom Operations
+- Basic Research Methods
+
+YEAR 2 — PROFESSIONAL REPORTING
+
+Include:
+
+- Advanced Reporting
+- News Editing
+- Headline Writing
+- Feature Writing
+- Interview Techniques
+- Investigative Journalism
+- Political Reporting
+- Crime Reporting
+- Court Reporting
+- Economic Reporting
+- Development Reporting
+- Environmental Reporting
+- Health Reporting
+- Education Reporting
+- Fact-Checking
+- Source Verification
+- Media Research
+- Newsroom Management
+
+YEAR 3 — MULTIMEDIA AND DIGITAL JOURNALISM
+
+Include:
+
+- Television Journalism
+- Radio Journalism
+- Broadcast Production
+- TV News Presentation
+- Video Journalism
+- Mobile Journalism (MoJo)
+- Photojournalism
+- Digital Journalism
+- Online Publishing
+- Social Media Journalism
+- Multimedia Storytelling
+- Podcast Production
+- Documentary Journalism
+- Data Journalism
+- Digital Verification
+- OSINT Fundamentals
+- Audio Editing
+- Video Editing
+- Live Reporting
+
+YEAR 4 — ADVANCED AND INTERNATIONAL JOURNALISM
+
+Include:
+
+- International Journalism
+- Global Media Systems
+- Advanced Investigative Journalism
+- Data-Driven Investigations
+- Media Law
+- Journalism Ethics
+- Press Freedom
+- Human Rights Journalism
+- Conflict and War Reporting
+- Environmental Investigations
+- Health and Science Journalism
+- Artificial Intelligence in Journalism
+- Media Entrepreneurship
+- Newsroom Leadership
+- Crisis Reporting
+- Advanced Research Methods
+- Professional Portfolio Development
+- Internship
+- Final Journalism Project
+- Career Development
+
+Add other essential subjects identified through academic research.
+
+Organize every subject under the correct academic year and semester.
+
+Do not leave subjects as empty titles.
+
+---
+
+PART 8 — CREATE REAL CHAPTER-WISE EDUCATIONAL CONTENT
+
+Every subject must contain meaningful educational materials.
+
+Each subject should include:
+
+1. Subject introduction.
+2. Learning objectives.
+3. Table of contents.
+4. Chapter-wise lessons.
+5. Simple Bangla explanations.
+6. Important English terminology with Bangla meanings.
+7. Definitions and concepts.
+8. Practical examples.
+9. Relevant real-world case studies.
+10. Important notes.
+11. Short questions and answers.
+12. Descriptive questions and answers.
+13. MCQs with correct answers and explanations.
+14. Practical exercises.
+15. Assignments.
+16. Revision materials.
+17. Chapter assessments.
+
+Lessons should be understandable to ordinary beginners.
+
+Explain complex journalism concepts using simple Bangla and practical examples.
+
+Gradually increase the academic and professional difficulty.
+
+Do not generate meaningless repeated paragraphs.
+
+Do not create empty chapters or placeholder content.
+
+Every lesson must teach something useful.
+
+If the complete curriculum is too large to generate at once, first establish the complete curriculum and content structure, then create the actual lessons systematically.
+
+Clearly track which subjects and chapters have genuine completed content.
+
+Never claim that the entire Academy is complete while substantial educational content is still missing.
+
+---
+
+PART 9 — PRACTICAL JOURNALISM TRAINING
+
+The Academy must teach practical journalism, not only theoretical knowledge.
+
+Develop progressive exercises covering:
+
+- Identifying news.
+- Finding news sources.
+- News gathering.
+- Interview preparation.
+- Conducting interviews.
+- Recording statements.
+- Collecting evidence.
+- Verifying information.
+- Cross-checking sources.
+- Writing news reports.
+- Writing headlines.
+- Editing news.
+- Writing features.
+- Preparing television news scripts.
+- Preparing radio news scripts.
+- Taking journalistic photographs.
+- Recording video reports.
+- Mobile journalism.
+- Live reporting.
+- Television news presentation.
+- Investigative reporting.
+- Digital publishing.
+- Social media publishing.
+- Correcting published mistakes.
+- Protecting confidential sources.
+
+Provide realistic practice assignments.
+
+Where possible, let students complete exercises and track their progress.
+
+Use fictional examples when real people or incidents are not necessary.
+
+Never present fictional exercises as actual news.
+
+---
+
+PART 10 — BANGLADESH AND INTERNATIONAL JOURNALISM
+
+Include a substantial Bangladesh-focused journalism education component.
+
+Cover:
+
+- Bangladesh media history.
+- Bangladesh media environment.
+- Constitution-related freedom of expression and press freedom.
+- Relevant media laws and regulations.
+- Right to Information.
+- Defamation and legal risks.
+- Reporting from districts and upazilas.
+- Local government reporting.
+- Political reporting.
+- Crime and court reporting.
+- Disaster and emergency reporting.
+- Rural and community journalism.
+- National news agencies.
+- International news agencies.
+- International media organizations.
+- Global journalism systems.
+
+For legal topics, use reliable and current sources.
+
+Clearly identify the applicable jurisdiction and date of legal information.
+
+Do not present outdated legal information as current law.
+
+---
+
+PART 11 — JOURNALISM ETHICS AND REPORTER SAFETY
+
+Teach professional journalism ethics throughout the Academy.
+
+Include:
+
+- Accuracy.
+- Fairness.
+- Independence.
+- Accountability.
+- Transparency.
+- Verification.
+- Source protection.
+- Privacy.
+- Conflict of interest.
+- Responsible reporting.
+- Correction and clarification.
+- Avoiding fabricated news.
+- Avoiding manipulated photographs and videos.
+- Avoiding misinformation and disinformation.
+- Responsible accident reporting.
+- Responsible disaster reporting.
+- Responsible crime reporting.
+- Reporting involving children.
+- Reporting involving vulnerable persons.
+- Digital safety.
+- Field reporting safety.
+- Personal safety.
+- Confidential source protection.
+
+Teach students how to avoid defamation, unsupported allegations, sensationalism, and misleading headlines.
+
+Practical journalism exercises must reinforce ethical conduct.
+
+---
+
+PART 12 — FOUR-YEAR LEARNING ROADMAP
+
+Create a structured learning roadmap covering all four years.
+
+Include:
+
+- Year-wise learning objectives.
+- Semester-wise goals.
+- Subject-wise progression.
+- Weekly study guidance.
+- Reading schedules.
+- Practical training schedules.
+- Revision schedules.
+- Assessment milestones.
+- Skills development.
+- Progress tracking.
+- Semester completion requirements.
+- Annual competency requirements.
+
+Students should understand what they need to learn, practise, and achieve at each stage.
+
+Provide a clear path from beginner to competent journalism practitioner.
+
+---
+
+PART 13 — EXAMINATIONS AND ASSESSMENT SYSTEM
+
+Create a meaningful assessment system.
+
+Include:
+
+- Chapter quizzes.
+- MCQ examinations.
+- Short-answer questions.
+- Descriptive questions.
+- Practical assignments.
+- Reporting exercises.
+- Interview exercises.
+- News-writing assessments.
+- Editing assessments.
+- Semester assessments.
+- Annual assessments.
+- Final-year project.
+- Professional portfolio assessment.
+
+Provide answers and explanations where appropriate.
+
+Clearly label generated examination materials as:
+
+BSN Model Questions / BSN নমুনা প্রশ্ন
+
+Do not falsely claim that generated questions are actual past examination questions from universities.
+
+Assess both theoretical knowledge and practical journalism skills.
+
+---
+
+PART 14 — SMART EDUCATIONAL SEARCH
+
+Create a functional search system for the Academy.
+
+Search must cover actual educational content, not just subject headings.
+
+Search should include:
+
+- Bangla lesson content.
+- English terminology.
+- Definitions.
+- Chapter content.
+- Notes.
+- Questions.
+- Answers.
+- MCQs.
+- Practical exercises.
+- Assignments.
+
+Support Bangla and English searches.
+
+Where technically possible, support common Bangla spelling variations.
+
+Search results must be clickable.
+
+When a student clicks a result, open the exact relevant subject, chapter, lesson, or question.
+
+Do not show misleading search results.
+
+Provide useful empty-search feedback.
+
+Support offline search for locally stored educational content.
+
+---
+
+PART 15 — STUDENT LEARNING EXPERIENCE
+
+Create a useful learning interface.
+
+Include:
+
+- Subject browsing.
+- Year and semester navigation.
+- Chapter navigation.
+- Reading progress.
+- Completed chapter tracking.
+- Bookmarks.
+- Recently opened lessons.
+- Resume reading.
+- Learning milestones.
+- Assessment progress.
+- Search history where appropriate.
+
+The interface should be simple and understandable for beginner students.
+
+Preserve the existing BSN News 24 design language.
+
+Do not make unnecessary changes to unrelated app screens.
+
+---
+
+PART 16 — OFFLINE AND ONLINE FUNCTIONALITY
+
+The Academy should work reliably with both online and offline access.
+
+Requirements:
+
+- Essential educational content should remain accessible offline after installation or download.
+- Downloaded lessons should remain available without an internet connection.
+- Online content should synchronize safely when internet access returns.
+- Preserve the existing Firebase project and configuration.
+- Avoid breaking existing Firebase authentication or other features.
+- Handle network errors gracefully.
+- Prevent duplicate or corrupted educational content.
+- Use secure data handling.
+- Avoid exposing secret keys or credentials.
+- Avoid unnecessary paid services.
+
+Do not replace the existing Firebase project.
+
+Do not create a new Firebase project unless absolutely required and explicitly authorized.
+
+---
+
+PART 17 — COPYRIGHT, SOURCES AND ACADEMIC HONESTY
+
+Follow copyright and academic integrity requirements.
+
+Use reliable and legally accessible educational references.
+
+Do not copy complete copyrighted books, course packs, or protected university materials.
+
+Create original BSN lessons using researched concepts and properly attributed sources.
+
+Clearly label:
+
+- Officially published academic syllabus references.
+- Research-based information.
+- Original BSN lessons.
+- Model questions.
+- Practical exercises.
+- Recommended readings.
+
+Never invent citations or claim institutional approval without evidence.
+
+Never misrepresent BSN Journalism Academy as an officially accredited university degree.
+
+---
+
+PART 18 — EDUCATIONAL CONTENT COMPLETENESS AND QUALITY CONTROL
+
+Before declaring the Academy complete, inspect its actual content.
+
+Verify:
+
+1. All four academic years exist.
+2. All eight semesters are organized.
+3. All planned subjects are listed.
+4. Subject learning materials contain real educational content.
+5. Chapters contain meaningful lessons.
+6. Bangla explanations are understandable.
+7. English terminology includes Bangla meanings.
+8. Questions have correct answers.
+9. MCQs have correct answers and explanations.
+10. Practical assignments are usable.
+11. Search works across actual content.
+12. Search results open the correct content.
+13. Learning progress works.
+14. Offline access works for downloaded content.
+15. No empty placeholder lessons remain in any section declared complete.
+
+Maintain a clear distinction between:
+
+- Planned content.
+- Content under development.
+- Completed content.
+- Tested content.
+
+Do not falsely claim full completion.
+
+---
+
+PART 19 — GITHUB, SOURCE CODE AND ANDROID BUILD
+
+Work within the existing Google AI Studio project and its connected GitHub repository.
+
+Preserve the existing source-code structure.
+
+After implementation:
+
+1. Save all source-code changes.
+2. Verify that the GitHub-connected project contains the changes.
+3. Avoid overwriting the only working version.
+4. Preserve a recoverable state.
+5. Check Android build configuration.
+6. Check dependencies.
+7. Check Firebase integration.
+8. Build the Android application.
+9. Generate an APK when the environment supports it.
+10. Generate an AAB when the environment supports it.
+11. Preserve the complete editable source code.
+
+Do not claim an APK or AAB has been generated unless the actual build succeeds.
+
+If a build fails, report the exact error and attempt to fix it without damaging the working project.
+
+---
+
+PART 20 — FINAL APPLICATION TESTING
+
+Test the modified application thoroughly.
+
+At minimum, test:
+
+Existing application
+
+- App launches successfully.
+- Home Page works.
+- Existing navigation works.
+- Existing pages remain accessible.
+- Existing features remain functional.
+- Existing Firebase-dependent features continue working.
+
+Facebook and WhatsApp changes
+
+- Facebook section is absent from the Home Page.
+- WhatsApp section is removed from the third page.
+- Original Facebook section appears in the former WhatsApp location.
+- Original Facebook URL works correctly.
+
+Academy
+
+- Cover image displays correctly.
+- Cover image is not distorted or cropped.
+- Clicking the cover opens the Academy.
+- Four-year curriculum navigation works.
+- Subjects and lessons open correctly.
+- Search works.
+- Search results open the correct content.
+- Student progress tracking works.
+- Offline functionality works where implemented.
+
+General quality
+
+- No crashes.
+- No broken navigation.
+- No major UI overflow.
+- No missing resources.
+- No critical build errors.
+- No unintended changes to existing functionality.
+
+Clearly report any test that could not be performed.
+
+---
+
+PART 21 — IMPLEMENTATION WORKFLOW
+
+Implement the project in the following five controlled phases.
+
+Do not attempt to make all changes without checking intermediate results.
+
+PHASE A — EXISTING APP MODIFICATIONS
+
+Complete Parts 1–4.
+
+Tasks:
+
+- Inspect the project.
+- Preserve the existing design.
+- Remove the Facebook section from the Home Page.
+- Remove the WhatsApp section from the third page.
+- Relocate the original Facebook section to the former WhatsApp location.
+- Test the modifications.
+
+After completing Phase A:
+
+- Save all changes.
+- Run relevant tests.
+- Update the progress checkpoint.
+- Report what was completed.
+- Identify the next phase.
+- Continue automatically to Phase B if execution capacity remains.
+
+PHASE B — ACADEMY FOUNDATION
+
+Complete Parts 5–8.
+
+Tasks:
+
+- Add the Academy book cover using the exact uploaded image.
+- Make the cover clickable.
+- Research international academic standards.
+- Develop the four-year curriculum.
+- Organize eight semesters.
+- Create the educational content structure.
+- Begin producing genuine chapter-wise learning materials.
+
+After completing Phase B:
+
+- Save all changes.
+- Run relevant tests.
+- Update the progress checkpoint.
+- Report what was completed.
+- Identify the next phase.
+- Continue automatically to Phase C if execution capacity remains.
+
+PHASE C — PROFESSIONAL JOURNALISM EDUCATION
+
+Complete Parts 9–13.
+
+Tasks:
+
+- Practical journalism training.
+- Bangladesh and international journalism.
+- Ethics and safety.
+- Four-year roadmap.
+- Examination and assessment system.
+
+After completing Phase C:
+
+- Save all changes.
+- Run relevant tests.
+- Update the progress checkpoint.
+- Report what was completed.
+- Identify the next phase.
+- Continue automatically to Phase D if execution capacity remains.
+
+PHASE D — LEARNING SYSTEM AND CONTENT QUALITY
+
+Complete Parts 14–18.
+
+Tasks:
+
+- Smart educational search.
+- Student learning experience.
+- Offline and online functionality.
+- Copyright and academic honesty.
+- Educational content completeness and quality control.
+
+After completing Phase D:
+
+- Save all changes.
+- Run relevant tests.
+- Update the progress checkpoint.
+- Report what was completed.
+- Identify the next phase.
+- Continue automatically to Phase E if execution capacity remains.
+
+PHASE E — BUILD, TEST AND FINAL REPORT
+
+Complete Parts 19–22.
+
+Tasks:
+
+- GitHub and source-code verification.
+- Android build.
+- Final application testing.
+- Implementation review.
+- Final report.
+
+Do not skip testing.
+
+Do not declare completion unless the implemented work has been checked.
+
+---
+
+PART 22 — FINAL REPORT AND PROJECT DELIVERY
+
+When all five phases have been completed, provide a detailed final report.
+
+Include:
+
+1. Project identity verified.
+2. Existing design preservation status.
+3. Home Page changes.
+4. Third-page changes.
+5. Facebook section relocation status.
+6. Academy cover implementation status.
+7. Four-year curriculum status.
+8. Eight-semester organization status.
+9. Actual educational content completion status.
+10. Practical journalism training status.
+11. Bangladesh and international content status.
+12. Ethics and safety content status.
+13. Examination system status.
+14. Search functionality status.
+15. Student progress functionality status.
+16. Offline and online functionality status.
+17. Firebase integration status.
+18. GitHub synchronization status.
+19. APK build status.
+20. AAB build status.
+21. Source-code preservation status.
+22. Testing results.
+23. Known bugs or unresolved limitations.
+24. Remaining work, if any.
+
+Clearly distinguish completed, partially completed, and uncompleted work.
+
+Do not claim that a feature works unless it has actually been tested.
+
+---
+
+ADDITIONAL EXECUTION, REPORTING AND CHECKPOINT INSTRUCTIONS
+
+These instructions apply to the entire 22-part master prompt and take priority over any conflicting workflow instruction above.
+
+A. WORK STEP BY STEP
+
+Work systematically through the five phases.
+
+Do not skip any part.
+
+Do not silently omit difficult tasks.
+
+Do not claim a task is complete simply because its heading or interface has been created.
+
+Implement the actual functionality and verify it.
+
+B. REPORT AFTER EACH PHASE
+
+When one phase is completed, immediately provide me with a progress report.
+
+The report must clearly state:
+
+- Which phase has been completed.
+- Which Parts have been completed.
+- What features or changes were actually implemented.
+- What tests were performed.
+- Whether the tests passed or failed.
+- Any known problems.
+- Which phase and Parts will be worked on next.
+
+Use a clear status message, for example:
+
+PHASE A COMPLETED — PARTS 1–4.
+
+Completed work: [List actual completed work.]
+
+Testing: [Actual test results.]
+
+Next phase: PHASE B — PARTS 5–8.
+
+Status: PHASE B WORK IN PROGRESS.
+
+After reporting, continue automatically to the next phase if execution capacity remains.
+
+Do not wait for my permission after every phase.
+
+Do not insert an artificial 30-second pause or remain silent.
+
+The purpose of reporting is to keep me informed while the work continues.
+
+If a phase is only partially complete, report it as partially complete. Never label it completed.
+
+C. SAVE WORK REGULARLY
+
+Save source-code changes throughout implementation.
+
+Do not wait until the end to save everything.
+
+After each phase:
+
+1. Save modified files.
+2. Verify the saved changes.
+3. Update the project checkpoint.
+4. Run the relevant tests.
+5. Preserve a recoverable project state.
+
+If Git is available, use safe commits or version-control checkpoints.
+
+Do not push broken or unfinished work to the main branch without preserving a recoverable state.
+
+Never overwrite the only working backup.
+
+D. MANDATORY PROGRESS CHECKPOINT FILE
+
+Create or update this file in the project repository:
+
+"BSN_PROJECT_PROGRESS_CHECKPOINT.md"
+
+Keep it updated after every completed phase and whenever substantial work is completed.
+
+The checkpoint must contain:
+
+1. Project name and identity.
+2. Current phase.
+3. Last completed Part.
+4. All completed Parts.
+5. All completed phases.
+6. Current incomplete Part.
+7. Remaining Parts.
+8. Files modified.
+9. Files created.
+10. Features implemented.
+11. Educational subjects and chapters actually completed.
+12. Tests performed.
+13. Test results.
+14. Known bugs.
+15. Unresolved problems.
+16. Remaining tasks.
+17. Exact next action.
+18. Instructions for resuming the project.
+
+The checkpoint must describe the actual state of the project, not an assumed or intended state.
+
+Preserve all completed source-code changes and educational content.
+
+E. WHEN USAGE LIMIT OR EXECUTION CAPACITY IS RUNNING OUT
+
+If Google AI Studio usage limits, context limits, execution limits, or other restrictions prevent you from continuing:
+
+1. Stop starting new tasks.
+2. Save all current work immediately.
+3. Update "BSN_PROJECT_PROGRESS_CHECKPOINT.md".
+4. Preserve all completed changes.
+5. Record the exact point where execution stopped.
+6. Record the current incomplete task.
+7. List all remaining tasks.
+8. Verify that the checkpoint has been saved.
+
+Do not pretend the current phase is complete if it is not.
+
+Do not silently abandon unfinished work.
+
+Do not begin another phase if there is insufficient capacity to save the current state safely.
+
+F. EXACT STOP REPORT
+
+When work must stop because of a usage or execution limit, provide a clear report in this format:
+
+WORK STOPPED HERE — CHECKPOINT SAVED
+
+Project: BSN News 24
+
+Current Phase: [Actual phase]
+
+Completed Parts: [Actual completed Parts]
+
+Completed Phases: [Actual completed phases]
+
+Current Incomplete Part: [Exact Part]
+
+Remaining Work: [List]
+
+Files Modified/Created: [List]
+
+Checkpoint File: "BSN_PROJECT_PROGRESS_CHECKPOINT.md"
+
+Last Completed Action: [Exact action]
+
+Next Action on Resume: [Exact next action]
+
+The project progress has been preserved. Waiting for your continuation instruction.
+
+Do not claim the checkpoint was saved unless it actually exists and has been updated.
+
+G. RESUME FROM THE CHECKPOINT
+
+When I later instruct:
+
+"CHECKPOINT থেকে কাজ শুরু করো। আগের কাজ যেখানে শেষ হয়েছে সেখান থেকে শুরু করো। সম্পন্ন কাজ পুনরায় করবে না। বাকি কাজগুলো শেষ করো।"
+
+Follow these steps:
+
+1. Read "BSN_PROJECT_PROGRESS_CHECKPOINT.md".
+2. Inspect the current project files.
+3. Verify that previously completed changes still exist.
+4. Identify the last completed Part.
+5. Identify the first incomplete Part.
+6. Resume from the exact unfinished task.
+7. Do not repeat completed work.
+8. Continue using the same 22-Part structure.
+9. Continue using the same five-phase workflow.
+10. Update the checkpoint as work progresses.
+
+Do not ask me to repeat the entire project specification.
+
+Do not assume that work automatically resumes after a session ends. Wait for my continuation instruction.
+
+H. FINAL EXECUTION RULE
+
+My priority is a properly functioning, complete, reliable BSN News 24 application with the BSN Journalism Academy genuinely implemented.
+
+Accuracy, preservation of existing features, educational quality, safe implementation, and recoverable progress are more important than claiming fast completion.
+
+Start with PHASE A — PARTS 1–4.
+
+Inspect the existing project first.
+
+Then proceed in the specified order, report after every completed phase, and continue automatically while execution capacity remains.
+
+Do not make unnecessary changes outside the scope of this master prompt.

@@ -20,7 +20,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.academy.data.AcademyCurriculumRepository
+import com.example.academy.ui.AcademyRootScreen
+import com.example.academy.ui.AcademyViewModel
 import com.example.ui.components.BsnBottomNavBar
 import com.example.ui.components.BsnFixedHeader
 import com.example.ui.components.bsnTabs
@@ -67,18 +71,29 @@ fun BsnNews24AppRoot() {
 fun BsnMainShell() {
   val context = LocalContext.current
   var selectedTab by rememberSaveable { mutableIntStateOf(0) }
+  var showAcademy by rememberSaveable { mutableStateOf(false) }
 
   val newsLinksViewModel: NewsLinksViewModel =
     viewModel(factory = NewsLinksViewModel.Factory(context))
   val profileIdViewModel: ProfileIdViewModel =
     viewModel(factory = ProfileIdViewModel.Factory(context))
+  val academyViewModel: AcademyViewModel =
+    viewModel(factory = AcademyViewModel.Factory(context))
+  val academyProgress by academyViewModel.progressState.collectAsStateWithLifecycle()
 
-  // Handle system back press from Tabs 2..10 by returning to Tab 1 (Home)
-  BackHandler(enabled = selectedTab != 0) {
+  // Handle system back press inside Academy (subject -> hub -> home) and tabs 2..10 -> Home
+  BackHandler(enabled = showAcademy) {
+    if (!academyViewModel.navigateBackToHub()) {
+      showAcademy = false
+    }
+  }
+  BackHandler(enabled = !showAcademy && selectedTab != 0) {
     selectedTab = 0
   }
 
-  val currentTabTitle = bsnTabs.getOrNull(selectedTab)?.fullTitle ?: bsnTabs.first().fullTitle
+  val currentTabTitle =
+    if (showAcademy) "BSN Journalism Academy"
+    else bsnTabs.getOrNull(selectedTab)?.fullTitle ?: bsnTabs.first().fullTitle
 
   Scaffold(
     modifier = Modifier.fillMaxSize().background(BsnBlack),
@@ -90,7 +105,10 @@ fun BsnMainShell() {
     bottomBar = {
       BsnBottomNavBar(
         selectedIndex = selectedTab,
-        onTabSelected = { selectedTab = it },
+        onTabSelected = {
+          showAcademy = false
+          selectedTab = it
+        },
       )
     },
   ) { innerPadding ->
@@ -100,19 +118,36 @@ fun BsnMainShell() {
           .background(BsnBlack)
           .padding(innerPadding)
     ) {
-      Crossfade(targetState = selectedTab, label = "bsn_tab_crossfade") { tabIndex ->
-        when (tabIndex) {
-          0 -> Tab1HomeScreen()
-          1 -> Tab2FbGroupTelegramScreen()
-          2 -> Tab3FbPageScreen()
-          3 -> Tab4InstagramScreen()
-          4 -> Tab5YouTubeScreen()
-          5 -> Tab6TikTokScreen()
-          6 -> Tab7WebsiteScreen()
-          7 -> Tab8WhatsAppGroupScreen()
-          8 -> Tab9MyNewsLinksScreen(viewModel = newsLinksViewModel)
-          9 -> Tab10ProfileIdCardScreen(viewModel = profileIdViewModel)
-          else -> Tab1HomeScreen()
+      if (showAcademy) {
+        AcademyRootScreen(
+          viewModel = academyViewModel,
+          onExitToHome = { showAcademy = false },
+        )
+      } else {
+        Crossfade(targetState = selectedTab, label = "bsn_tab_crossfade") { tabIndex ->
+          when (tabIndex) {
+            0 ->
+              Tab1HomeScreen(
+                completedAcademyChapters = academyProgress.completedChapterIds.size,
+                totalAcademyChapters = AcademyCurriculumRepository.totalChapterCount(),
+                onOpenAcademy = { showAcademy = true },
+              )
+            1 -> Tab2FbGroupTelegramScreen()
+            2 -> Tab3FbPageScreen()
+            3 -> Tab4InstagramScreen()
+            4 -> Tab5YouTubeScreen()
+            5 -> Tab6TikTokScreen()
+            6 -> Tab7WebsiteScreen()
+            7 -> Tab8WhatsAppGroupScreen()
+            8 -> Tab9MyNewsLinksScreen(viewModel = newsLinksViewModel)
+            9 -> Tab10ProfileIdCardScreen(viewModel = profileIdViewModel)
+            else ->
+              Tab1HomeScreen(
+                completedAcademyChapters = academyProgress.completedChapterIds.size,
+                totalAcademyChapters = AcademyCurriculumRepository.totalChapterCount(),
+                onOpenAcademy = { showAcademy = true },
+              )
+          }
         }
       }
     }

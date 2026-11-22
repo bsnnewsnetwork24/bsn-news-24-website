@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.R
 import com.example.config.BsnConfig
@@ -17,7 +18,6 @@ import com.example.ui.components.BsnInfoBoard
 import com.example.ui.components.BsnSwitchButton
 import com.example.ui.components.SocialBrand
 import com.example.ui.theme.FacebookBlue
-import com.example.ui.theme.WhatsAppGreen
 import com.example.utils.ExternalLinkLauncher
 
 @Composable
@@ -25,7 +25,7 @@ fun Tab3FbPageScreen(modifier: Modifier = Modifier) {
   val context = LocalContext.current
 
   LazyColumn(
-    modifier = modifier.fillMaxSize(),
+    modifier = modifier.fillMaxSize().testTag("tab3_list"),
     contentPadding = PaddingValues(horizontal = 14.dp, vertical = 14.dp),
     verticalArrangement = Arrangement.spacedBy(14.dp),
   ) {
@@ -36,18 +36,19 @@ fun Tab3FbPageScreen(modifier: Modifier = Modifier) {
       )
     }
 
+    // Relocated Facebook Personal Profile Switch Button (moved from Tab 1 Home)
     item {
       BsnSwitchButton(
-        title = "WhatsApp এ নিউজ পাঠান",
-        subtitle = "নম্বর: ${BsnConfig.WHATSAPP_NEWS_NUMBER_INTL}",
-        brand = SocialBrand.WHATSAPP,
-        accentColor = WhatsAppGreen,
-        testTag = "tab3_whatsapp_news_btn",
+        title = "রিমন শিকদার - ব্যক্তিগত ফেসবুক প্রোফাইল",
+        subtitle = "অফিশিয়াল Facebook প্রোফাইল ভিজিট করুন",
+        brand = SocialBrand.FACEBOOK,
+        accentColor = FacebookBlue,
+        testTag = "tab3_fb_profile_btn",
         onClick = {
           ExternalLinkLauncher.openUrl(
             context,
-            BsnConfig.WHATSAPP_NEWS_URL,
-            ExternalLinkLauncher.TargetPlatform.WHATSAPP,
+            BsnConfig.FACEBOOK_PERSONAL_PROFILE_URL,
+            ExternalLinkLauncher.TargetPlatform.FACEBOOK,
           )
         },
       )
